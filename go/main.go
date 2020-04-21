@@ -29,18 +29,13 @@ func loadPage(title string) (*Page, error) {
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request) {
-	//fmt.Println(r.URL.Path[5:])
+
 	title := r.URL.Path[len("/edit/"):]
 	p, err := loadPage(title)
 	if err != nil {
 		p = &Page{Title: title}
 	}
-	/*fmt.Fprintf(w, "<h1>Editing %s</h1>"+
-	"<form action=\"/save/%s\" method=\"POST\">"+
-	"<textarea name=\"body\">%s</textarea><br>"+
-	"<input type=\"submit\" value=\"Save\">"+
-	"</form>",
-	p.Title, p.Title, p.Body)*/
+
 	t, err := template.ParseFiles("edit.html")
 	if err != nil {
 		log.Println(err)
@@ -55,7 +50,7 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Server error!"))
 		return
 	}
-	//w.Write(buf.Bytes())
+
 	buf.WriteTo(w)
 }
 
@@ -78,15 +73,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func generalHandler(w http.ResponseWriter, r *http.Request) {
-	/*title := r.URL.Path[len("/"):]
-	p, _ := loadPage(title)
-	t, err := template.ParseFiles("general.html")
-	t.Execute(w, p)
-	if err != nil {
-		log.Println(err)
-	}*/
 
-	const tpl = `<html><head><title>Проверка статуса</title></head><body> <h1>Статус</h1><div>{{.}}</div></body></html>`
 	b, err := ioutil.ReadFile("category_name.txt")
 	if err != nil {
 		fmt.Print(err)
