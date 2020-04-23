@@ -5,7 +5,11 @@
 
     <body> 
         <h1>Категории</h1>
-        <div>{{.}}</div>
+        <ul>
+            {{range.strings}}
+            <li><b>{{.}}</b></li>
+           {{end}}
+        </ul>
     </body>
 
 </html>

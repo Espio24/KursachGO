@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type Page struct {
@@ -74,16 +75,18 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 
 func generalHandler(w http.ResponseWriter, r *http.Request) {
 
-	b, err := ioutil.ReadFile("category_name.txt")
+	category_name, err := ioutil.ReadFile("category_name.txt")
 	if err != nil {
 		fmt.Print(err)
 	}
-	s := string(b)
+
+	category := strings.Split(string(category_name), "\n")
+
 	t, err := template.ParseFiles("general.html")
 	if err != nil {
 		fmt.Print(err)
 	}
-	t.Execute(w, s)
+	t.Execute(w, category)
 
 }
 
