@@ -37,7 +37,7 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 		p = &Page{Title: title}
 	}
 
-	t, err := template.ParseFiles("edit.html")
+	t, err := template.ParseFiles("pages/edit.html")
 	if err != nil {
 		log.Println(err)
 	}
@@ -66,7 +66,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/view/"):]
 	p, _ := loadPage(title)
-	t, err := template.ParseFiles("view.html")
+	t, err := template.ParseFiles("pages/view.html")
 	t.Execute(w, p)
 	if err != nil {
 		log.Println(err)
@@ -75,18 +75,47 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 
 func generalHandler(w http.ResponseWriter, r *http.Request) {
 
-	category_name, err := ioutil.ReadFile("category_name.txt")
+	category_name, err := ioutil.ReadFile("Text/category_name.txt")
 	if err != nil {
 		fmt.Print(err)
 	}
 
 	category := strings.Split(string(category_name), "\n")
 
-	t, err := template.ParseFiles("general.html")
+	t, err := template.ParseFiles("pages/general.html")
 	if err != nil {
 		fmt.Print(err)
 	}
 	t.Execute(w, category)
+
+}
+
+func categoryHandler(w http.ResponseWriter, r *http.Request) {
+
+	category_name, err := ioutil.ReadFile("Text/programmirovanie.txt")
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	header_name := strings.Split(string(category_name), "\n")
+
+	/*for i := 0; i < len(header_name); i++ {
+
+		if header_name[i] != "" {
+
+			configLine := strings.Split(string(header_name[i]), "\n")
+
+			newHeader := Header{HeaderName: configLine[1]}
+			configs = append(configs, newHeader)
+		}
+	}*/
+
+	t, err := template.ParseFiles("pages/category.html")
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	t.Execute(w, header_name)
 
 }
 
@@ -96,6 +125,7 @@ func main() {
 	http.HandleFunc("/save/", saveHandler)
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/", generalHandler)
+	http.HandleFunc("/category/", categoryHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
