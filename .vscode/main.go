@@ -121,7 +121,7 @@ func generalHandler(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i < len(category); i++ {
 		a[i] = strings.Split(string(category[i]), "/")
 		namePage := strings.Split(string(category[i]), "/")
-		if "/"+namePage[1]+"/" == r.RequestURI {
+		if ("/"+namePage[1]+"/") == r.RequestURI || ("/"+namePage[1]) == r.RequestURI {
 			categoryReqest = true
 		}
 	}
@@ -170,7 +170,7 @@ func categoryHandler(w http.ResponseWriter, r *http.Request) {
 			Image = header_name[i]
 		case 3:
 			Text = header_name[i]
-			post := NewModel(Data, Aidi, Name,  Zagolovok, Image, Text)
+			post := NewModel(Data, Aidi, Name, Zagolovok, Image, Text)
 			mass[post.Aidi] = post
 			massiv = append(massiv, post)
 		case 4:
@@ -189,7 +189,7 @@ func categoryHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	mass = make(map[string] *Model, 0)
+	mass = make(map[string]*Model, 0)
 
 	http.HandleFunc("/edit/", editHandler)
 	http.HandleFunc("/save/", saveHandler)
