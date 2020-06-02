@@ -4,7 +4,8 @@
     </head>
     {{range $v := .}}
     <body> 
-        <h1><a href="/viewPost?id={{$v.Aidi}}">{{$v.Zagolovok}}</a></h1>
+        <h1>{{$v.Zagolovok}}</a></h1>
+        <h2>{{$v.Name}}</h2>
         <ul>
             <li><b>{{$v.Text}}</b></li>
         </ul>

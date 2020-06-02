@@ -6,8 +6,8 @@
     <body> 
         <h1>Категории</h1>
         <ul>
-            {{range .}}
-            <li><b>{{.}}</b></li>
+            {{range $val := .}}
+            <li><a href= {{index $val 1}}>{{index $val 0}}</a></li>
            {{end}}
         </ul>
     </body>
