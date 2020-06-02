@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Главная страница</title>
+    </head>
+
+    <body> 
+        <h1>Категории</h1>
+        <ul>
+            {{range $val := .}}
+            <li><a href= {{index $val 1}}>{{index $val 0}}</a></li>
+           {{end}}
+        </ul>
+    </body>
+
+</html>
